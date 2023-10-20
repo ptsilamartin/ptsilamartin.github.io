@@ -2,7 +2,7 @@
 """
 @author: xpessoles@lamartin.fr
 """
-# === Import des Modules === 
+# === Import des Modules ===
 import math as m
 import random as rd
 import numpy as np
@@ -16,7 +16,11 @@ les_y = les_y1+les_y2-0.4*les_x*les_x
 
 les_x = np.linspace(0,60*14,1000)
 les_y = 800*les_y + 1500
-alt = les_y 
+
+les_x = [x for x in les_x]
+les_y = [x for x in les_y]
+
+alt = les_y
 
 plt.ylabel("Altitude [m]")
 plt.plot(les_x,les_y,label = "Profil")
