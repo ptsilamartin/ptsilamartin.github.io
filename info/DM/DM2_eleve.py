@@ -39,7 +39,7 @@ def calcule_point_traj(a: float)-> (float, float):
 #Question 3 : Tracé de la trajectoire du point C
 
 
-#Question 5 : Fonction pour tracer un cercle de centre xc, yc et de rayon Rc
+#Question 4 : Fonction pour tracer un cercle de centre xc, yc et de rayon Rc
 def trace_cercle(xc : float,yc : float,Rc : float)-> None:
     '''trace un cercle de centre C(xc,yc) et de rayon Rc'''
     a='rien'
@@ -47,7 +47,7 @@ def trace_cercle(xc : float,yc : float,Rc : float)-> None:
 
 
 
-#Question 6 : Tracé des différentes trajectoire d'un point de la fraise
+#Question 5 : Tracé des différentes trajectoire d'un point de la fraise
 
 
 
