@@ -2,7 +2,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-from numpy.random import rand
 from matplotlib.colors import ListedColormap
 
 # === Fonctions prédéfinies ===
