@@ -12,38 +12,13 @@ def image_noire(n,p):
 
 
 
-##Question 2 : affichage
-
-
-
-##Question 3 : création d'images en noir et blanc rayées
-def rayure_hor(n,p):
-    '''construit la matrice n*p d'une image rayée horizontalement'''
-
-
-
-    return(img)
-
-
-def rayure_ver(n,p):
-    '''construit la matrice n*p d'une image rayée horizontalement'''
+##Questio2 : affichage
 
 
 
 
-    return(img)
 
-##Question3bis (optionnelle) : création d'un échiquier
-
-def echiquier(n,p):
-    '''crée un motif échiquier sur une image de taille n par p'''
-
-
-
-    return(im)
-
-
-##Question 4 : modifier une image pour l'éclaircir
+##Question : modifier une image pour l'éclaircir
 def eclaircir(im,k):
 
 
@@ -51,28 +26,28 @@ def eclaircir(im,k):
 
 
 
-##Question 5 : modifier une image pour l'éclaircir en faisant une copie indépendante
+##Question : modifier une image pour l'éclaircir en faisant une copie indépendante
 def eclaircir2(im0,k):
 
     return(im)
 
 
 
-##Question 6 : lecture d'un fichier image et appel de la fonction éclaircir
+##Question : lecture d'un fichier image et appel de la fonction éclaircir
 
 
 
-##Question 7 : lecture et affichage de l'image ciel
+##Question : lecture et affichage de l'image ciel
 
 
 
-##Question 8 : détection de contour d'une image
+##Question : détection de contour d'une image
 
 def contour (im, seuil):
 
     return im2
 
-##Question 9 : test
+##Question : test
 
 
 
