@@ -1,9 +1,17 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Feb 16 16:29:39 2021
 
-@author: nicov
-"""
+
+dist = [[0 	, 64 , 106, 165, 138, 102],
+    [64	, 0  , 155, 146, 186, 121],
+    [106, 155, 0  , 270, 105, 94],
+    [165, 146, 270, 0  , 300, 263],
+    [138, 186, 105, 300, 0  , 208],
+    [102, 121, 94 , 263, 208, 0]]
+
+
+
+
+
+
 
 
 
@@ -13,11 +21,12 @@ cueillette = [ [24,"framboises",1], [16,"myrtilles",3], [6,"fraises",5], [3,"mur
 
 
 ### question 1
+"""
 def sac_a_dos(L,capacite):
-    """Implémentation de la résolution du problème du sac à dos
+    "Implémentation de la résolution du problème du sac à dos
     L est une liste des éléments à mettre dans le sac
     capacité est la masse maximale qu peut transporter le sac à dos.
-    """
+    "
     masse_sac = 0
     sac=[]                                        #à l'initialisation, le sac est vide
     i=0                                           #i sert d'indice dans la liste L
@@ -38,7 +47,7 @@ def sac_a_dos(L,capacite):
         
         i=i+1       #On incrémente i pour passer au fruit suivant de la cueillette
     return ......
-            
+"""            
         
 ### question 2
      
