@@ -56,6 +56,7 @@ def is_in_strip(x):
     """
 
 
+
 def calcul_tom0(z,tom0=500):
     """
     Recherche du temps de réponse à 5%
@@ -123,4 +124,8 @@ def plot_abaque(xx,yy):
     plt.grid(which="major",axis="y",linewidth=1.5, linestyle='-')
     plt.grid(which="minor",axis="x",linewidth=0.75, linestyle='-', color='0.75')
     plt.grid(which="minor",axis="y",linewidth=0.75, linestyle='-', color='0.75')
+    plt.show()
+
+# xx,yy = make_xy()
+# plot_abaque(xx,yy)
 
