@@ -1,134 +1,126 @@
-import matplotlib.pyplot as plt
-import random as rd
+import math as m
 
-def plot_chemin(chemin:[[int]]) -> None :
-    les_x = [c[0] for c in chemin]
-    les_y = [c[1] for c in chemin]
 
-    plt.axis('equal')
-    plt.plot(les_x,les_y,'-r')		# À utiliser où on veut dans le fichier
-    plt.grid()
-    plt.show()
+def f_pseudo(tom0,z):
+    return 1-((m.exp(-z*tom0))/(m.sqrt(1-z*z)))*m.sin(tom0*m.sqrt(1-z*z)+m.asin(m.sqrt(1-z*z)))
 
-def positions_voisines(p:[int]) -> [[int,int]] :
-    x,y = p
-    return [[x,y+1],[x+1,y],[x,y-1],[x-1,y]]
+    
+def f_aperiodique(tom0,z):
+    return 1+(m.exp(-tom0*(z+m.sqrt(z*z-1))))/(2*(z*m.sqrt(z*z-1)+z*z-1))-(m.exp(-tom0*(z-m.sqrt(z*z-1))))/(2*(z*m.sqrt(z*z-1)-z*z+1))
 
-def positions_possibles(p:[int], atteints:[[int]]) -> [[int]] :
-    voisins = positions_voisines(p)
-    possibles = []
-    for v in voisins :
-        if v not in atteints :
-            possibles.append(v)
-    return possibles
 
-def genere_chemin_naif(n:int) -> [[int]] :
-    chemin = [[0,0]]
-    p = [0,0]
-    for i in range(n-1):
-        pos = positions_possibles(p,chemin)
-        if len(pos) == 0 :
-            return [[]]
+## Question 1    
+def f_critique(tom0):
+    """
+    Fonction permettant de calculer s(tom0) dans le cas ou z>1. 
+    Entrées :
+        * tom0, flt : le temps réduit - sans unité
+    Sortie : 
+        * res, flt : s(tom0) - ici, sans unité.
+    """
+
+## Question 2
+def f_s(tom0,z):
+    """
+    Fonction permettant de calculer la réponse indicielle d'un système du second ordre. 
+    Entrées : 
+        * tom0, flt : temps de réponse réduit
+        * z, flt : coefficient d'amortissement
+    Sortie : 
+        * s(tom0,z), flt
+    """
+
+## Question 3
+
+## Question 4
+
+## Question 5
+
+## Question 6
+
+# Pour tracer une courbe :
+# import matplotlib.pyplot as plt
+# plt.plot(les_x,les_y) avec les les_x et les_y les listes respectives des abscisses et des ordonnées à définir
+# plt.show() pour afficher une courbe
+
+
+## Question 6
+def is_in_strip(x):
+    """
+    Fonction permettant de savoir si une valeur est dans la bande des + ou - 5% de la valeur finale.
+    Entrée : 
+        x, flt : réel
+    Sortie : 
+        True si la valeur est dans la bande à + ou - 5%
+        False si la valeur n'est pas dans la bande à + ou - 5%
+    """
+
+
+def calcul_tom0(z,tom0=500):
+    """
+    Recherche du temps de réponse à 5%
+    Entrées : 
+       * z, flt : coefficient d'amortissement
+       * tom0 (flt, optionnel) : si non précisé, on calcule le temps de réponse en partant de tom0 = 500
+    Sortie : 
+       * tom0 (flt) : temps de réponse à 5%
+    """
+    pas_tom0=0.05
+    x = f_s(tom0,z) 
+    if z<0.7:
+        # Dans cas, s'assurer que le tom0 initial est suffisamment grand
+        while is_in_strip(x) :
+            tom0  = tom0 - pas_tom0
+            x = f_s(tom0,z)
+        tom0=tom0+pas_tom0
+    else :
+        # Dans cas, s'assurer que le tom0 initial est suffisamment petit
+        while not is_in_strip(x) :
+            tom0  = tom0 + pas_tom0 
+            x = f_s(tom0,z)
+        tom0=tom0-pas_tom0
+    return tom0
+
+
+
+def make_xy() :
+    xx,yy = [],[]
+    n = 1000
+    z = 0.01
+    tom0 = 500
+    pasz = 0.01
+    while z<=100:
+        print(z)
+        if z<0.7:
+            tom0=calcul_tom0(z,tom0)
         else :
-            p = rd.choice(pos)
-            chemin.append(p)
-
-    return chemin
-
-def plot_proba():
-    les_l = []
-    les_p = []
-
-    for i in range(351):
-        print(i)
-        les_l.append(i)
-        cpt = 0
-        for j in range(1000):
-            ch = genere_chemin_naif(i)
-            if ch == [[]] :
-                cpt = cpt+1
-        les_p.append(cpt/1000)
-
-    plt.plot(les_l,les_p)
-    plt.grid()
-    plt.xlabel('Longueur du chemin')
-    plt.ylabel("Probabilité d'échec")
-    plt.show()
+            tom0=calcul_tom0(z,0)
+      
+        if z<0.1:
+            pasz = 0.001
+        elif z<1:
+            pasz = 0.01
+        elif z<10:
+            pasz = 0.1
+        else :
+            pasz = 1
+        
+        xx.append(z)
+        yy.append(tom0)
+        z=z+pasz
+    return xx,yy
 
 
-def est_CAE(chemin:[[int]]) -> bool :
-    ch = sorted(chemin)
-    for i in range(1,len(ch)) :
-        if ch[i] == ch[i-1] :
-            return False
-    return True
 
-# def rot(p:[int], q:[int], a:int) -> [int]:
-#     dx = q[0]-p[0]
-#     dy = q[1]-p[1]
-#     if a == 0 :
-#         return [p[0]-dx,p[1]-dy]
-#     elif a == 1 :
-#         return [p[0]+dy,p[1]+dx]
-#     else :
-#         return [p[0]-dy,p[1]-dx]
+def plot_abaque(xx,yy):
+    plt.plot(xx,yy,label="Temps de réponse réduit $tr \\omega_0$")
+    plt.xlabel("Coefficient d'amortissement $\\xi$")
+    plt.ylabel("Temps de réponse réduit $tr \\omega_0$")
+    plt.title("Temps de réponse réduit d'un système du 2nd ordre")
+    plt.legend()
+    plt.loglog()
+    plt.grid(which="major",axis="x",linewidth=1.5, linestyle='-')
+    plt.grid(which="major",axis="y",linewidth=1.5, linestyle='-')
+    plt.grid(which="minor",axis="x",linewidth=0.75, linestyle='-', color='0.75')
+    plt.grid(which="minor",axis="y",linewidth=0.75, linestyle='-', color='0.75')
 
-def rot(p,q,a):
-    x,y = p
-    u,v = q
-    assert(a in [0,1,2])
-    if a==0:
-        return [2*x-u,2*y-v]
-    elif a==1:
-        return [x+y-v,y+u-x]
-    else:
-        return [x+v-y,y+x-u]
-#
-# def rotation_chemin(chemin,i_piv,a):
-#     new_chemin = chemin[:i_piv]
-#     p = chemin[i_piv]
-#     for i in range(i_piv+1,len(chemin)):
-#         new_chemin.append(rot(p,chemin[i],a))
-#     return new_chemin
-
-def rotation(chemin,i_piv,a):
-    chemin_piv=[]
-    for i in range(i_piv+1):
-        chemin_piv.append(chemin[i])
-    p=chemin[i_piv]
-    for i in range(i_piv+1,len(chemin)):
-        chemin_piv.append(rot(p,chemin[i],a))
-    return chemin_piv
-
-#
-# def chemin_genere_pivot(n,n_rot):
-#     chemin = [[i,0] for i in range(n)]
-#
-#     for i in range(n_rot):
-#         print(i)
-#         ae = False
-#         while not ae :
-#             c = chemin.copy()
-#             ipiv = rd.randrange(1,n-1)
-#             a = rd.randrange(0,3)
-#             print(ipiv)
-#             c = rotation_chemin(c,ipiv,a)
-#             ae = est_CAE(c)
-#         chemin = c
-#     return c
-
-def genere_chemin_pivot(n,n_rot):
-    chemin = [[i,0] for i in range(n+1)] # intialisation donnée dans l'énoncé
-    for i in range(n_rot):
-        bloque = True
-        while bloque: # tant que l'on génère un chemin qui bloque
-            i_piv = rd.randrange(1,n)
-            a = rd.randrange(0,3)
-            chemin_piv = rotation(chemin,i_piv,a) # nouveau chemin potentiel
-            if est_CAE(chemin_piv): # le nouveau chemin est un CAE
-                chemin = chemin_piv # mise à jour du chemin
-                bloque = False # on sort de la boucle while
-    return chemin
-
-#c = genere_chemin_pivot(50,2000)
-#plot_chemin(c)
